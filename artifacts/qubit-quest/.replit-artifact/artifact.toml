@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Qubit Quest"
+description = "An interactive quantum computing simulator for expo visitors to explore qubit states, apply gates, visualize probabilities, and understand measurement."
+version = "1.0.0"
+id = "artifacts/qubit-quest"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 21143
+
+[services.development]
+run = "pnpm --filter @workspace/qubit-quest run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/qubit-quest", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/qubit-quest/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "21143"
+BASE_PATH = "/"
